@@ -80,11 +80,15 @@ function mousePressed() {
   for (var i = 0; i < points.length; i++) {
     var point = points[i];
     var distances = []
+    var minDistance = 0;
     for (var j = 0; j < centroids.length; j++) {
       var centroid = centroids[j];
-      distances[j] = dist(point.x, point.y, centroid.point.x, centroid.point.y);
+      var newDistance = dist(point.x, point.y, centroid.point.x, centroid.point.y);
+      if (minDistance == 0 || newDistance < minDistance) {
+        minDistance = newDistance
+        point.cluster = j
+      }
     }
-    point.cluster = distances[0] > distances[1] ? 1 : 0;
   }
 
   // move centroids to the centers of all clustered points
